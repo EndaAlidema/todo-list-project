@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Todo List Application</h1>
+        <h3 class="h3">Available Projects:</h3>
+
+        <ul id="projects-list">
+        </ul>
+        <div class="add-todo">
+            <button id="add-todo-button" class="btn green-btn">+ Add New Todo</button>
+        </div>
+
+        <div id="new-todo-form" class="form-container hidden">
+            <h2>Add New Todo</h2>
+            <form id="todo-form">
+                <div class="form-row">
+                    <label for="todo-name">Todo Name</label>
+                    <input type="text" id="todo-name" placeholder="Enter todo name" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="todo-description">Description</label>
+                    <textarea id="todo-description" placeholder="Enter todo description"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="todo-due-date">Due Date</label>
+                    <input type="date" id="todo-due-date" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="todo-priority">Priority</label>
+                    <select id="todo-priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="todo-project">Project</label>
+                    <select id="todo-project">
+                        <option value="DEFAULT">To Do</option>
+                        <option value="NEW">+ Add New Project</option>
+                    </select>
+                </div>
+
+                <div class="form-row hidden" id="new-project-row">
+                    <label for="new-project-name">New Project</label>
+                    <input type="text" id="new-project-name" placeholder="Enter new project name">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn green-btn">Add Todo</button>
+                    <button type="button" id="cancel-todo-form" class="btn red-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
