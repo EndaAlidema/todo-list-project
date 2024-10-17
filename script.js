@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let projects = JSON.parse(localStorage.getItem('projects')) || [{ name: 'DEFAULT', todos: [] }];
     let editIndex = null;  // Track if we're editing an existing todo
 
-    // Set the min date for the date input to today's date
+    // Function to set the minimum date for the date input
     const setMinDateForTodo = () => {
         const dateInput = document.getElementById('todo-due-date');
         const today = new Date().toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
@@ -45,6 +45,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Function to populate the project dropdown with all projects
+    const populateProjectDropdown = () => {
+        // Clear existing options
+        todoProjectDropdown.innerHTML = '';
+        
+        // Add "To Do (Default)" and "Add New Project" options
+        addProjectToDropdown('DEFAULT');
+        const newOption = document.createElement('option');
+        newOption.value = 'NEW';
+        newOption.textContent = '+ Add New Project';
+        todoProjectDropdown.appendChild(newOption);
+        
+        // Add all existing projects except default
+        projects.filter(p => p.name !== 'DEFAULT').forEach(project => {
+            addProjectToDropdown(project.name);
+        });
+    };
+
+    // Function to add a project to the dropdown
+    function addProjectToDropdown(projectName) {
+        const newOption = document.createElement('option');
+        newOption.value = projectName;
+        newOption.textContent = projectName === 'DEFAULT' ? 'To Do (Default)' : projectName;
+        todoProjectDropdown.appendChild(newOption);
+    }
+
     // Handle form submission to create or edit a todo
     todoForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -72,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             todoProject = newProjectName;
             projects.push({ name: todoProject, todos: [] });
-            addProjectToDropdown(todoProject);
+            populateProjectDropdown(); // Repopulate the dropdown with the new project
         }
 
         const todo = {
@@ -97,14 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderProjects();
         newTodoForm.classList.add('hidden');  // Hide the form after submission
     });
-
-    // Add a project to the dropdown dynamically
-    function addProjectToDropdown(projectName) {
-        const newOption = document.createElement('option');
-        newOption.value = projectName;
-        newOption.textContent = projectName;
-        todoProjectDropdown.appendChild(newOption);
-    }
 
     // Render the projects and their todos
     function renderProjects() {
@@ -227,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('projects', JSON.stringify(projects));
     }
 
-    // Initial render to display the default project
+    // Initial render to display the default project and populate the dropdown
     renderProjects();
+    populateProjectDropdown(); // Populate the dropdown with all projects
 });
